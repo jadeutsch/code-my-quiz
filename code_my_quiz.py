@@ -33,6 +33,8 @@ quiz_data = {
           'message': "You're insane."
     }
 }
+#user inputs chosen level and the output is the questions and answers associated
+#with said level
 def choose_level():
     level = raw_input("Choose your level of difficulty: easy, medium, hard, or insane. ")
     while level not in ["easy","medium","hard","insane"]:
@@ -48,19 +50,26 @@ def choose_level():
     elif level == "insane":
         return insane_quiz, insane_answers
 
+#code checks user input against given answers
+#if answer is correct, a correct output is returned
+#if answer is wrong, an incorrect output is returned
 def check_answer(user_answer, quiz_list, quiz_index):
     if user_answer == quiz_list[quiz_index]:
         return "Correct!"
+    else:
         return "Incorrect."
         pass
 
+#if user loses, this message is returned
 def you_lost():
     print "I'm sorry, but you lost."
     return
 
+#if user wins, this message is returned
 def you_win():
     print "Congratulations! You've won!"
 
+#runs quiz and checks user answers against answer list
 def play_quiz():
     quiz,quiz_list = choose_level()
     print quiz
@@ -68,7 +77,7 @@ def play_quiz():
     guesses = 5
     while quiz_index < len(blanks):
         user_answer = raw_input("What's your answer to question " + blanks[quiz_index] + "?: ")
-        if check_answer(user_answer, quiz_list, quiz_index) == "correct_answer":
+        if check_answer(user_answer, quiz_list, quiz_index) == "Correct!":
             print "\nThat's correct! Good job!\n"
             quiz = quiz.replace(blanks[quiz_index], user_answer.upper())
             quiz_index += 1
