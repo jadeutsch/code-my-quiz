@@ -1,10 +1,30 @@
 name = raw_input("Hello, what's your name? ")
 blanks = ["_1_", "_2_", "_3_", "_4_"]
 #list of Harry Potter questions
-easy_quiz = "1. What is the name of the main character the books are named for? _1_ \n2. What is the name of the dark wizard Harry fights? _2_ \n3. What is the name of Harry's male best friend? _3_ \n4. What is the name of Harry's female best friend? _4_"
-medium_quiz = "1. What is the name of Harry's owl? _1_ \n2. What is the name of the Potions teacher that despises Harry? _2_ \n3. What was the name of the Hogwarts headmaster who loved Harry like a grandson? _3_ \n4. What is the name of Harry's godfather? _4_"
-hard_quiz = "1. What is the name of Voldemort's snake? _1_ \n2. What is the name of magical transportation where witches and wizards seem to appear and disappear? _2_ \n3. How many children do Harry and Ginny have? _3_ \n4. How many years later, from the Battle of Hogwarts, is the epilogue in Harry Potter and the Deathly Hallows? _4_"
-insane_quiz = "1. How long did the duel between Dumbledore and Grindelwald last? _1_ \n2. In the books, what does Ollivander make shoot out of Harry's wand before the First Task? _2_ \n3. What is the holiday James and Lily Potter were murdered on? _3_ \n4. What was the name of Severus Snape's mother? _4_"
+easy_quiz = r"""
+"1. What is the name of the main character the books are named for? _1_
+\n2. What is the name of the dark wizard Harry fights? _2_
+\n3. What is the name of Harry's male best friend? _3_
+\n4. What is the name of Harry's female best friend? _4_"
+"""
+medium_quiz = r"""
+"1. What is the name of Harry's owl? _1_
+\n2. What is the name of the Potions teacher that despises Harry? _2_
+\n3. What was the name of the Hogwarts headmaster who loved Harry like a grandson? _3_
+\n4. What is the name of Harry's godfather? _4_"
+"""
+hard_quiz = r"""
+"1. What is the name of Voldemort's snake? _1_
+\n2. What is the name of magical transportation where witches and wizards seem to appear and disappear? _2_
+ \n3. How many children do Harry and Ginny have? _3_
+ \n4. How many years later, from the Battle of Hogwarts, is the epilogue in Harry Potter and the Deathly Hallows? _4_"
+ """
+insane_quiz = r"""
+"1. How long did the duel between Dumbledore and Grindelwald last? _1_
+\n2. In the books, what does Ollivander make shoot out of Harry's wand before the First Task? _2_
+\n3. What is the holiday James and Lily Potter were murdered on? _3_
+\n4. What was the name of Severus Snape's mother? _4_"
+"""
 #answers to questions
 easy_answers = ["Harry Potter", "Voldemort", "Ron Weasley", "Hermione Granger"]
 medium_answers = ["Hedwig", "Severus Snape", "Albus Dumbledore", "Sirius Snape"]
@@ -33,11 +53,15 @@ quiz_data = {
           'message': "You're insane."
     }
 }
-#user inputs chosen level and the output is the questions and answers associated
-#with said level
+
 def choose_level():
+    """
+    User inputs chosen level and the output
+    is the questions and answers associated
+    with said level.
+    """
     level = raw_input("Choose your level of difficulty: easy, medium, hard, or insane. ")
-    while level not in ["easy","medium","hard","insane"]:
+    while level not in ["easy", "medium", "hard", "insane"]:
         level = raw_input("Please choose: easy, medium, hard, or insane. ")
 
     print quiz_data[level]['message']
@@ -50,28 +74,30 @@ def choose_level():
     elif level == "insane":
         return insane_quiz, insane_answers
 
-#code checks user input against given answers
-#if answer is correct, a correct output is returned
-#if answer is wrong, an incorrect output is returned
 def check_answer(user_answer, quiz_list, quiz_index):
+    """
+    Code checks user input against given answers.
+    If answer is correct, a correct output is returned.
+    If answer is wrong, an incorrect output is returned.
+    """
     if user_answer == quiz_list[quiz_index]:
         return "Correct!"
     else:
         return "Incorrect."
         pass
 
-#if user loses, this message is returned
 def you_lost():
+    """If user loses, this message is returned."""
     print "I'm sorry, but you lost."
     return
 
-#if user wins, this message is returned
 def you_win():
+    """If user wins, this message is returned."""
     print "Congratulations! You've won!"
 
-#runs quiz and checks user answers against answer list
 def play_quiz():
-    quiz,quiz_list = choose_level()
+    """Run quiz and check user answers against answer list."""
+    quiz, quiz_list = choose_level()
     print quiz
     quiz_index = 0
     guesses = 5
@@ -89,6 +115,6 @@ def play_quiz():
             guesses -= 1
             if guesses == 0:
               return you_lost()
-            print "That's incorrect. You have " + str (guesses) + " guesses left."
+            print "That's incorrect. You have " + str(guesses) + " guesses left."
 
 play_quiz()
