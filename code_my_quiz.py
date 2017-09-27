@@ -1,6 +1,6 @@
 name = raw_input("Hello, what's your name? ")
 blanks = ["_1_", "_2_", "_3_", "_4_"]
-#list of Harry Potter questions
+# list of Harry Potter questions
 easy_quiz = r"""
 "1. What is the name of the main character the books are named for? _1_
 \n2. What is the name of the dark wizard Harry fights? _2_
@@ -16,21 +16,21 @@ medium_quiz = r"""
 hard_quiz = r"""
 "1. What is the name of Voldemort's snake? _1_
 \n2. What is the name of magical transportation where witches and wizards seem to appear and disappear? _2_
- \n3. How many children do Harry and Ginny have? _3_
- \n4. How many years later, from the Battle of Hogwarts, is the epilogue in Harry Potter and the Deathly Hallows? _4_"
- """
+\n3. How many children do Harry and Ginny have? _3_
+\n4. How many years later, from the Battle of Hogwarts, is the epilogue in Harry Potter and the Deathly Hallows? _4_"
+"""
 insane_quiz = r"""
 "1. How long did the duel between Dumbledore and Grindelwald last? _1_
 \n2. In the books, what does Ollivander make shoot out of Harry's wand before the First Task? _2_
 \n3. What is the holiday James and Lily Potter were murdered on? _3_
 \n4. What was the name of Severus Snape's mother? _4_"
 """
-#answers to questions
+# answers to questions
 easy_answers = ["Harry Potter", "Voldemort", "Ron Weasley", "Hermione Granger"]
 medium_answers = ["Hedwig", "Severus Snape", "Albus Dumbledore", "Sirius Snape"]
 hard_answers = ["Nagini", "Apparition", "Three", "Nineteen"]
 insane_answers = ["Three hours", "Wine", "Halloween", "Eileen Prince"]
-#select type of Harry Potter questions
+# select type of Harry Potter questions
 quiz_data = {
    'easy': {
         'quiz': easy_quiz,
@@ -95,12 +95,13 @@ def you_win():
     """If user wins, this message is returned."""
     print "Congratulations! You've won!"
 
-def play_quiz():
-    """Run quiz and check user answers against answer list."""
-    quiz, quiz_list = choose_level()
-    print quiz
-    quiz_index = 0
-    guesses = 5
+def validate_answer(level, blanks):
+    for blank in blanks:
+        if blank in level:
+            return blank
+    return None
+
+def replace_blanks(quiz_index, quiz, quiz_level, quiz_list):
     while quiz_index < len(blanks):
         user_answer = raw_input("What's your answer to question " + blanks[quiz_index] + "?: ")
         if check_answer(user_answer, quiz_list, quiz_index) == "Correct!":
@@ -110,11 +111,37 @@ def play_quiz():
             guesses = 5
             print quiz
             if quiz_index == len(blanks):
-              return you_win()
-        else:
-            guesses -= 1
-            if guesses == 0:
-              return you_lost()
-            print "That's incorrect. You have " + str(guesses) + " guesses left."
+                return you_win()
+            else:
+                guesses -= 1
+                if guesses == 0:
+                    return you_lost()
+                print "That's incorrect. You have " + str(guesses) + " guesses left."
+
+def play_quiz():
+    """Run quiz and check user answers against answer list."""
+    quiz_level = choose_level()
+    quiz = quiz_data[quiz_level]['quiz']
+    # quiz, quiz_list = choose_level()
+    print quiz
+    quiz_list = quiz_data[quiz_level]['answers']
+    quiz_index = 0
+    guesses = 5
+    return replace_blanks(quiz_index, quiz, quiz_level, quiz_list)
+    # while quiz_index < len(blanks):
+    #    user_answer = raw_input("What's your answer to question " + blanks[quiz_index] + "?: ")
+    #    if check_answer(user_answer, quiz_list, quiz_index) == "Correct!":
+    #        print "\nThat's correct! Good job!\n"
+    #        quiz = quiz.replace(blanks[quiz_index], user_answer.upper())
+    #        quiz_index += 1
+    #        guesses = 5
+    #        print quiz
+    #        if quiz_index == len(blanks):
+    #          return you_win()
+    #    else:
+    #        guesses -= 1
+    #        if guesses == 0:
+    #          return you_lost()
+    #        print "That's incorrect. You have " + str(guesses) + " guesses left."
 
 play_quiz()
