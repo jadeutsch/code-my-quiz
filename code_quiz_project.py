@@ -45,12 +45,13 @@ def check_answer(blank, key, quiz, guesses):
     """
     answer = raw_input("\nWhat is your answer for _" + str(blank + 1) + "_? \n")
     answer = answer.upper()
-    if answer == key[blank]:
-        print "Correct! \n"
-        return answer
-    else:
-        print "That's incorrect. You have " + str(guesses - 1) + " guesses left. \n"
-        return False
+    while answer in key[blank]:
+        if answer == key[blank]:
+            print "Correct! \n"
+            return answer
+        else:
+            print "That's incorrect. You have " + str(guesses - 1) + " guesses left. \n"
+            return False
 
 
 # function to start quiz
